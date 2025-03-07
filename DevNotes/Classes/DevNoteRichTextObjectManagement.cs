@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace DevNotes.Classes
 {
@@ -75,6 +76,58 @@ namespace DevNotes.Classes
             selection.Start.Paragraph.SiblingBlocks.InsertBefore(originalParagraph, list);
             selection.Start.Paragraph.SiblingBlocks.Remove(originalParagraph);
             return richTextContent;
+        }
+
+        public RichTextBox TextAlign(RichTextBox richTextContent, char orientation)
+        {
+            if (richTextContent.Selection != null)
+            {
+                TextSelection selection = richTextContent.Selection;
+                switch (orientation)
+                {
+                    case 'L': selection.ApplyPropertyValue(Paragraph.TextAlignmentProperty, TextAlignment.Left); return richTextContent;
+                    case 'C': selection.ApplyPropertyValue(Paragraph.TextAlignmentProperty, TextAlignment.Center); return richTextContent;
+                    case 'R': selection.ApplyPropertyValue(Paragraph.TextAlignmentProperty, TextAlignment.Right); return richTextContent;
+                    default: return richTextContent;
+                }               
+            }
+            else
+            {
+                return richTextContent;
+            }
+        }
+
+        public RichTextBox TextStyle(RichTextBox richTextContent, char style)
+        {
+            if (richTextContent.Selection != null)
+            {
+                TextSelection selection = richTextContent.Selection;
+                switch (style)
+                {
+                    case 'B':
+                        {
+                            selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Bold);
+                            return (richTextContent);
+                        }
+                    case 'I':
+                        {
+                            selection.ApplyPropertyValue(Inline.FontStyleProperty, FontStyles.Italic);
+                            return (richTextContent);
+                        }
+                    case 'N':
+                        {
+                            selection.ApplyPropertyValue(Inline.FontStyleProperty, FontStyles.Normal);
+                            selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Normal);
+                            return (richTextContent);
+                        }
+                    default:
+                        return (richTextContent);
+                }
+            }
+            else 
+            {
+                return (richTextContent);
+            }
         }
 
         #region Link management

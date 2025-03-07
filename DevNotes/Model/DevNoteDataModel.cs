@@ -21,5 +21,5 @@ namespace DevNotes.Model
         public byte[]? DevNote { get; set; }
         [BsonElement("Issue date")]
         public DateTime NoteCreatedDate { get; set; }
-    }
+    }    
 }

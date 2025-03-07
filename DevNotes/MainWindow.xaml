@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DevNotes"
         xmlns:ViewModels="clr-namespace:DevNotes.ViewModel"
         mc:Ignorable="d"
-        Title="Developer notes" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Developer notes" Height="800" Width="1080" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <ViewModels:MainWindowViewModel/>
     </Window.DataContext>
@@ -93,14 +93,13 @@
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0" BorderBrush="#4DA1A9" BorderThickness="1" CornerRadius="5" Padding="2" Margin="4">
-                <TreeView 
-                x:Name="SnippetsTree"                     
-                Margin="2" 
-                VerticalAlignment="Stretch" 
-                HorizontalAlignment="Stretch" 
-                ItemsSource="{Binding SnippetTreeData}"                    
-                >
-                </TreeView>
+                <ListView ItemsSource="{Binding DevNotes}">
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Foreground="AliceBlue" Background="DarkGreen" Text=" {Binging Path=Id}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView>
             </Border>
             <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" Background="#4DA1A9"/>
 
@@ -124,23 +123,14 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="120" />
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <StatusBarItem>
-                <TextBlock x:Name="lblDateTime" />
+                <TextBlock Text="{Binding DateTimeStatusBar}"/>
             </StatusBarItem>
-            <Separator Grid.Column="1" Background="#F6F4F0"/>
-            <StatusBarItem Grid.Column="2">
-                <TextBlock x:Name="lblSnippetName" Text=" Selected Snippet name"/>
-            </StatusBarItem>
-            <Separator Grid.Column="3" Background="#F6F4F0"/>
+            <Separator Grid.Column="1" Background="#F6F4F0"/>            
         </StatusBar>
-
     </Grid>
 </Window>

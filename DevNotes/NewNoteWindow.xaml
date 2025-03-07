@@ -1,0 +1,162 @@
+﻿<Window x:Class="DevNotes.NewNoteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DevNotes"
+        xmlns:ViewModels="clr-namespace:DevNotes.ViewModel"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="New Note" Height="850" Width="1300">
+    <Window.DataContext>
+        <ViewModels:NewNoteViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <!-- Main Toolbar-->
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="3" >
+            <ToolBar x:Name="NewSnippetMainToolbar" Margin ="0" HorizontalAlignment="Stretch" >
+                <WrapPanel Orientation="Vertical">
+                    <Label HorizontalAlignment="Center">Note name</Label>
+                    <TextBox Width="300" Height="25" Name="NewSnippetSnipName" HorizontalAlignment="Left"  >
+                        <TextBox.Template>
+                            <ControlTemplate TargetType="TextBox" >
+                                <Border BorderBrush="#4DA1A9" 
+                                BorderThickness="1"  
+                                x:Name="SnipNameBorder"
+                                CornerRadius="10">
+                                    <!-- Szövegbevitel támogatásához szükséges elem -->
+                                    <ScrollViewer x:Name="PART_ContentHost" Margin="2" />
+                                </Border>
+                            </ControlTemplate>
+                        </TextBox.Template>
+                    </TextBox>
+                </WrapPanel>
+                <Separator Margin="5"></Separator>
+                
+                <Button Margin="0" Height="50" Name="btnAddSnippet" ToolTip="Save note" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./img/icons8-add-file-40.png" />
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </DockPanel>
+        <GridSplitter Margin="4" Grid.Column="1" Grid.Row="1" Width="3" HorizontalAlignment="Left" Background="#4DA1A9"/>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <!-- Toolbar size-->
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <!--RichTextToolbar-->
+            <DockPanel Grid.Row="0">
+                <ToolBar x:Name="NewSnippetRichTextToolBar" Margin ="0" HorizontalAlignment="Stretch" >
+                    <!-- <ComboBox Width="200" Name="AddNewSnipFontFamilyList" SelectionChanged="AddNewSnipFontFamilyList_SelectionChanged"></ComboBox>-->
+                    <!-- <ComboBox Width="70" Name="AddNewSnipFontSize" Margin="5 0 0 0 " SelectionChanged="AddNewSnipFontSize_SelectionChanged"></ComboBox>-->
+                    <!--<xctk:DoubleUpDown x:Name="AddNewSnipFontSize" Margin="5 0 0 0" Maximum="100" Minimum="1" Value="14" Height="20" Width="50" Spinned="AddNewSnipFontSize_Spinned" ValueChanged="AddNewSnipFontSize_ValueChanged" /> -->
+                    <Separator Margin="5"></Separator>
+
+                    <Button Height="30" ToolTip="Left align" Name="btnLeftAlign" Command="{Binding BtnLeftAlignClk}" CommandParameter="{Binding ElementName=newNote}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="./img/icons8-align-left-32.png" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Height="30" ToolTip="Center align" Name="btnCenterAlign" Margin="5 0 0 0" Command="{Binding BtnCenterAlignClk}" CommandParameter="{Binding ElementName=newNote}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="./img/icons8-align-center-32.png" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Height="30" ToolTip="Right align" Margin="5 0 0 0" Name="btnRightAlign" Command="{Binding BtnRightAlignClk}" CommandParameter="{Binding ElementName=newNote}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="./img/icons8-align-right-32.png" />
+                        </StackPanel>
+                    </Button>
+                    <Separator Margin="5"></Separator>
+
+                    <Button Height="30" ToolTip="Bold" Name="btnBold" Command="{Binding BtnBoldFontClk}" CommandParameter="{Binding ElementName=newNote}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="./img/icons8-bold-30.png" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Height="30" ToolTip="Italic" Name="btnItalic" Margin="5 0 0 0" Command="{Binding BtnItalicFontClk}" CommandParameter="{Binding ElementName=newNote}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="./img/icons8-italic-30.png" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Height="30" ToolTip="Normal" Name="btnNormal" Margin="5 0 0 0" Command="{Binding BtnNormalFontClk}" CommandParameter="{Binding ElementName=newNote}" >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="./img/icons8-close-30.png" />
+                        </StackPanel>
+                    </Button>
+
+                    <Separator Margin="5"></Separator>
+                    <!--
+                    <Button Height="30" ToolTip="Create list" Margin="5 0 0 0" Name="btnList" Click="btnList_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="./img/icons8-list-30.png" />
+                        </StackPanel>
+                    </Button>
+                    <Separator Margin="5"></Separator>
+                    <Button Height="30" ToolTip="Code box" Margin="5 0 0 0" Name="btnCodeBox" Click="btnCodeBox_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="./img/icons8-code-30.png" />
+                        </StackPanel>
+                    </Button>
+                    <Separator Margin="5"></Separator>
+                    <Button Height="30" ToolTip="Create link from selected text" Margin="5 0 0 0" Name="btnLink" Click="btnLink_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="./img/icons8-link-30.png" />
+                        </StackPanel>
+                    </Button>
+                    <Separator Margin="5"></Separator>
+                    <xctk:ColorPicker Height="30" Width="100" x:Name="colorPicker" SelectedColorChanged="colorPicker_SelectedColorChanged"/>
+                    <Separator Margin="5"></Separator>
+                    <ProgressBar Name="progSize" Height="20" Width="150" Minimum="1" Maximum="16793600" Value="1" Cursor=""/>
+                        -->
+                </ToolBar>
+            </DockPanel>
+
+            <Border Grid.Column="1" Grid.Row="1" BorderBrush="#4DA1A9" BorderThickness="1" CornerRadius="5" Padding="0" Margin="10 5 5 5">
+                <RichTextBox 
+                    AcceptsTab="True" 
+                    Name="newNote" 
+                    Margin="5,5,5,5" 
+                    Grid.Column="1" 
+                    Grid.Row="1" 
+                    HorizontalScrollBarVisibility="Auto" 
+                    VerticalScrollBarVisibility="Auto"
+                    IsDocumentEnabled="True"
+                    
+                    >
+                    <RichTextBox.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0" />
+                            <!-- Sorközök 0-ra állítása, alapból kihagy 1 sort ha entert nyomsz-->
+                        </Style>
+                    </RichTextBox.Resources>
+                </RichTextBox>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="2" BorderBrush="#4DA1A9" BorderThickness="1" CornerRadius="5" Padding="0" Margin="5 5 0 5">
+                <ListBox Grid.Row="2" Margin="5" Name="lbSnipKeywords"></ListBox>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
