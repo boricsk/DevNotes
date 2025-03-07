@@ -1,0 +1,16 @@
+*.env
+*.csv
+*.exe
+*.dll
+*.pdb
+*.vsidx
+*.cache
+*.bin
+*.zip
+*.msi
+**/bin/
+**/obj/
+.vs/
+Debug/
+Release/
+net8.0/

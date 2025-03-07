@@ -1,0 +1,146 @@
+﻿<Window x:Class="DevNotes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DevNotes"
+        xmlns:ViewModels="clr-namespace:DevNotes.ViewModel"
+        mc:Ignorable="d"
+        Title="Developer notes" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <ViewModels:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70" />
+            <!-- tool bar-->
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="22" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="3" >
+            <ToolBar x:Name="MainFormToolBar" Margin ="0" HorizontalAlignment="Stretch" >
+                <Button Margin="0" Height="64" ToolTip="Create new note" Command="{Binding NewNote}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./img/icons8-new-64.png" />
+                    </StackPanel>
+                </Button>
+                <Separator Margin="0"></Separator>
+
+                <Button Margin="0" Height="64" ToolTip="Setup" Command="{Binding ShowSetup}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./img/icons8-setup-64.png" />
+                    </StackPanel>
+                </Button>
+                <Separator Margin="0"></Separator>
+
+                <Button Margin="0" Height="64" ToolTip="Edit note" IsEnabled="False" Command="{Binding EditNote}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./img/icons8-edit-document-64.png" />
+                    </StackPanel>
+                </Button>
+                <Separator Margin="0"></Separator>
+
+                <Button Margin="0" Height="64" ToolTip="Delete selected note" IsEnabled="False">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./img/icons8-delete-64.png" />
+                    </StackPanel>
+                </Button>
+                <Separator Margin="0"></Separator>
+
+                <Button Margin="0" Height="64" ToolTip="Browse project notes" Command="{Binding BrowseNotes}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./img/icons8-database-restore-64.png" />
+                    </StackPanel>
+                </Button>
+                <Separator Margin="0"></Separator>
+            </ToolBar>
+        </DockPanel>
+
+        <!--Search-->
+        <Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="100,5,0,5">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="./img/icons8-search.gif" />
+            </StackPanel>
+            <TextBox x:Name="TextBoxSearch" Margin="100,10,150,10"  >
+                <TextBox.Template>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderBrush="#4DA1A9" 
+                            BorderThickness="1" 
+                            CornerRadius="10">
+                            <!-- Szövegbevitel támogatásához szükséges elem -->
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5" />
+                        </Border>
+                    </ControlTemplate>
+                </TextBox.Template>
+
+            </TextBox>
+        </Grid>
+
+        <!-- Midle part -->
+        <Grid Grid.Row="2" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3" />
+                <!-- A splitter helye -->
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" BorderBrush="#4DA1A9" BorderThickness="1" CornerRadius="5" Padding="2" Margin="4">
+                <TreeView 
+                x:Name="SnippetsTree"                     
+                Margin="2" 
+                VerticalAlignment="Stretch" 
+                HorizontalAlignment="Stretch" 
+                ItemsSource="{Binding SnippetTreeData}"                    
+                >
+                </TreeView>
+            </Border>
+            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" Background="#4DA1A9"/>
+
+            <Border Grid.Column="2" BorderBrush="#4DA1A9" BorderThickness="1" CornerRadius="5" Padding="2" Margin="4">
+                <FlowDocumentReader Grid.Column="2" x:Name="MainWindowCodeBox" IsScrollViewEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="2" ViewingMode="Scroll" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <FlowDocumentReader.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </FlowDocumentReader.Resources>
+                </FlowDocumentReader>
+            </Border>
+
+        </Grid>
+        <!-- End of midle part -->
+
+        <StatusBar Grid.Row="3" Background="#4DA1A9" Foreground="#F6F4F0" Grid.ColumnSpan="3"  Height="22"  Grid.RowSpan="2">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock x:Name="lblDateTime" />
+            </StatusBarItem>
+            <Separator Grid.Column="1" Background="#F6F4F0"/>
+            <StatusBarItem Grid.Column="2">
+                <TextBlock x:Name="lblSnippetName" Text=" Selected Snippet name"/>
+            </StatusBarItem>
+            <Separator Grid.Column="3" Background="#F6F4F0"/>
+        </StatusBar>
+
+    </Grid>
+</Window>
